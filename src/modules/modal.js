@@ -6,7 +6,9 @@ const modal = () => {
   const modalOverlay = body.querySelector('.modal-overlay');
 
   body.addEventListener('click', (e) => {
-    if (e.target.closest('.header .callback-btn') || e.target.classList.contains('button-services')) {
+    if (e.target.closest('.header .callback-btn') || 
+        e.target.classList.contains('button-services') || 
+        e.target.classList.contains('img-wrapper')) {
       e.preventDefault();
       
       modalCallback.style.display = 'block';

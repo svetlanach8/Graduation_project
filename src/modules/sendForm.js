@@ -17,9 +17,9 @@ const sendForm = () => {
   const validateInput = (list) => {
     let success = true;
 
-    if (/[^\d\+]/g.test(list.querySelector('input[name=tel]').value) ||
-      list.querySelector('input[name=tel]').value === '' ||
-      /[^а-я]/gi.test(list.querySelector('input[name=fio]').value)) {
+    if ((list.querySelector('input[name=tel]').value.length < 6 ||
+      list.querySelector('input[name=tel]').value.length > 16) ||
+      list.querySelector('input[name=fio]').value.length < 2) {
       success = false
     }
 
@@ -52,13 +52,23 @@ const sendForm = () => {
           statusBlock.textContent = errorText;
         })
     } else {
-      alert('Введите корректные данные');
+      alert('Введите необходимое количество символов \n Имя более 2 символов \n Телефон должен содержать от 6 до 16 цифр');
       statusBlock.textContent = '';
     }
   }
 
   try {
     const form = document.getElementById('callback-form');
+    const inputName = form.querySelector('input[name=fio]');
+    const inputPhone = form.querySelector('input[name=tel]');
+
+    inputName.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/[^а-я]/, "")
+    });
+
+    inputPhone.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/[^\d\+]/, "")
+    });
 
     if (!form) {
       throw new Error('Верните форму на место, пожалуйста!')
